@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "abba4b9b-07f0-4890-9af4-8ecb8922b50e",
+		"name": "ilcarro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "Login Registered User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bfa6b859-2738-4179-8c69-3fac8fbba171",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"var jsonData = pm.response.json();\r",
+											"pm.environment.set(\"accessToken\", jsonData.accessToken);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "0e0e4955-45d1-42c2-951c-af9a6387221a",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"id": "93b92a6e-653c-400f-860c-58353cfd8d2d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"bruno@gmail.com\",\r\n  \"password\": \"Bruno12344!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://ilcarro-backend.herokuapp.com/v1/user/login/usernamepassword"
+							},
+							"response": []
+						}
+					],
+					"id": "317e2166-8542-4455-84c8-a806e1d9ffb3"
+				},
+				{
+					"name": "Negative",
+					"item": [
+						{
+							"name": "Login Registered User with wrong email(401)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bfa6b859-2738-4179-8c69-3fac8fbba171",
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"API message: 'Login or Password incorrect'\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Login or Password incorrect\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "0e0e4955-45d1-42c2-951c-af9a6387221a",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"id": "8723a2ba-3a45-46ba-8c5e-69f1c5acf805",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"manuelgm.com\",\r\n  \"password\": \"Manuel1234!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://ilcarro-backend.herokuapp.com/v1/user/login/usernamepassword"
+							},
+							"response": []
+						}
+					],
+					"id": "81a25f64-ccec-4fa7-a29e-e8299943276d"
+				}
+			],
+			"id": "925368be-c4e5-4ef9-8f31-d48d55351ee2"
+		},
+		{
+			"name": "Car",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "Add Car",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1b1367b0-ac58-4303-9470-f73f893bb63a",
+										"exec": [
+											"pm.test(\"API message: 'Car added successfully'\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Car added successfully\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f10e3b0f-1c4b-40a1-b42b-d4b8df8dcfe5",
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "40c3c56f-7ea9-4266-994a-808c5df23644",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{accessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"serialNumber\": \"{{$timestamp}}\",\r\n  \"manufacture\": \"string\",\r\n  \"model\": \"string\",\r\n  \"year\": \"string\",\r\n  \"fuel\": \"string\",\r\n  \"seats\": 0,\r\n  \"carClass\": \"string\",\r\n  \"pricePerDay\": 0,\r\n  \"about\": \"string\",\r\n  \"city\": \"Haifa\",\r\n  \"lat\": 0,\r\n  \"lng\": 0,\r\n  \"image\": \"string\",\r\n  \"owner\": \"string\",\r\n  \"bookedPeriods\": [\r\n    {\r\n      \"email\": \"string\",\r\n      \"startDate\": \"2025-06-20\",\r\n      \"endDate\": \"2025-06-20\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseURI}}/v1/cars"
+							},
+							"response": []
+						},
+						{
+							"name": "Get user cars",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c592a621-050b-43e5-9282-aadd07b37f1a",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "a710ebdc-2faf-400b-9ffb-4937ad9a0150",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"id": "04578d0c-6593-4786-b406-12fd7259b332",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{accessToken}}",
+										"type": "text"
+									}
+								],
+								"url": "{{BaseURI}}/v1/cars/my"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete car by serial number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5871f60b-3252-48de-b2df-c3999400ca83",
+										"exec": [
+											"pm.test(\"API message: 'Car deleted successfully'\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Car deleted successfully\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "158d2111-c762-4594-801a-9c000d8f2d91",
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url:\"https://ilcarro-backend.herokuapp.com/v1/cars/my\",\r",
+											"    header: {\r",
+											"        \"Authorization\": pm.environment.get(\"accessToken\")\r",
+											"    }\r",
+											"}, function(err,responseBody) {\r",
+											"var responseJson = responseBody.json();\r",
+											"\r",
+											"var sNumber = [];\r",
+											"var list = (responseJson.cars).length;\r",
+											"\r",
+											"for(var i=0; i<list; i++) {\r",
+											"    var counter = responseJson.cars[i];\r",
+											"    number = counter.serialNumber\r",
+											"    sNumber.push(number)\r",
+											"}\r",
+											"\r",
+											"sNumber = JSON.stringify(sNumber).substring(2,12);\r",
+											"\r",
+											"console.log(\"Serial number: \", sNumber);\r",
+											"\r",
+											"pm.environment.set(\"serialNumber\",sNumber);\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"id": "07ff9cf9-6caf-4923-aa06-6e49772164d7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{accessToken}}",
+										"type": "text"
+									}
+								],
+								"url": "{{BaseURI}}/v1/cars/{{serialNumber}}"
+							},
+							"response": []
+						}
+					],
+					"id": "751cd562-3e88-4804-a990-f2dccc7611f9",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d49ceffd-5599-4e0f-bac3-5b612c2221dd",
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3fc6822-7b62-451d-91a0-b32e823010ac",
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": [
+						{
+							"name": "Add Car without city(400)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1b1367b0-ac58-4303-9470-f73f893bb63a",
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string: 'must not be blank'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"must not be blank\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f10e3b0f-1c4b-40a1-b42b-d4b8df8dcfe5",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"id": "3c030c45-53bc-4e63-9cdb-4107dae66042",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{accessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"serialNumber\": \"{{$timestamp}}\",\r\n  \"manufacture\": \"string\",\r\n  \"model\": \"string\",\r\n  \"year\": \"string\",\r\n  \"fuel\": \"string\",\r\n  \"seats\": 0,\r\n  \"carClass\": \"string\",\r\n  \"pricePerDay\": 0,\r\n  \"about\": \"string\",\r\n  \"lat\": 0,\r\n  \"lng\": 0,\r\n  \"image\": \"string\",\r\n  \"owner\": \"string\",\r\n  \"bookedPeriods\": [\r\n    {\r\n      \"email\": \"string\",\r\n      \"startDate\": \"2025-06-20\",\r\n      \"endDate\": \"2025-06-20\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseURI}}/v1/cars"
+							},
+							"response": []
+						}
+					],
+					"id": "fc8deb6a-8597-4e3d-a344-bdf763e593d7"
+				}
+			],
+			"id": "2ca2f431-52ed-4d7b-82a3-97e61f361eca"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "901eebaf-5cc7-498a-aab9-0d07cf7f6fe1",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f98eba19-861a-4929-b9aa-c43137e505b6",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.test(\"Response time is less than 700ms\", function () {\r",
+					"    pm.expect(pm.response.responseTime).to.be.below(700);\r",
+					"});\r",
+					"\r",
+					"pm.test(\"Content-Type is present\", function () {\r",
+					"    pm.response.to.have.header(\"Content-Type\");\r",
+					"});"
+				]
+			}
+		}
+	]
+}
