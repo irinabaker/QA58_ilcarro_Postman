@@ -418,7 +418,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "cc624bba-96ed-48ee-8261-bf77bf04af36",
+				"id": "9d9ae03b-f970-47e7-80bf-5f6a192c8fe5",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -429,7 +429,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "78f7fcb5-e5b6-4c8e-9851-fb2a9daf0099",
+				"id": "db8d5d43-0319-4ccc-a7b3-9664844c31a4",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -442,7 +442,7 @@
 					"});\r",
 					"\r",
 					"pm.test(\"User_Agent is present\", function () {\r",
-					"    pm.response.to.have.header(\"User-Agent\");\r",
+					"    pm.response.to.have.header(\"Cache-Control\");\r",
 					"});\r",
 					""
 				]
